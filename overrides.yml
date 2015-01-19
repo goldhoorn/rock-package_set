@@ -1,0 +1,6 @@
+overrides:
+    #Pull requests auf mainstream sind gestellt
+    - drivers/freenect2:
+        url: git@github.com:goldhoorn/libfreenect2.git
+    - drivers/glew:
+        url: git@github.com:goldhoorn/glew.git
