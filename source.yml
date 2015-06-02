@@ -294,6 +294,15 @@ version_control:
         patches: $AUTOPROJ_SOURCE_DIR/patches/aravis.patch
         branch: master
 
+    - drivers/freenect2:
+        github: OpenKinect/libfreenect2.git
+
+    - drivers/glfw:
+        github: glfw/glfw.git
+
+    - drivers/glew:
+        github: nigels-com/glew.git
+
     # Packages that have been migrated to github
     - drivers/sonar_tritech:
         github: rock-drivers/drivers-$PACKAGE_BASENAME
