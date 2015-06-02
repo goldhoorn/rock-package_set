@@ -211,6 +211,12 @@ version_control:
         url: git://github.com/D-Alex/rbind.git
         push_to: git@github.com:D-Alex/rbind.git
 
+    - drivers/libusb:
+        github: libusb/libusb
+        commit: v1.0.19
+        patches:
+            -  $AUTOPROJ_SOURCE_DIR/patches/linux_usbfs_increase_max_iso_buffer_length.patch
+
     - data_processing/openann:
         type: git
         url: git://github.com/AlexanderFabisch/OpenANN.git

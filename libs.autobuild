@@ -2,6 +2,54 @@
 
 cmake_package 'gui/pose3d_editor'
 
+cmake_package "drivers/glfw" do |pkg|
+    pkg.define "BUILD_SHARED_LIBS", "ON"
+end
+
+import_package "drivers/glew"  do |pkg|
+    pkg.depends_on "drivers/glfw"
+    pkg.depends_on "libturbojpeg"
+    pkg.post_install do
+        Autoproj.env_set_path "GLEW_DEST", Autobuild.prefix
+        pkg.in_dir(pkg.srcdir) do
+            Autobuild::Subprocess.run(pkg, 'make extensions', Autobuild.tool(:make), 'extensions')
+            Autobuild::Subprocess.run(pkg, 'make', Autobuild.tool(:make))
+            Autobuild::Subprocess.run(pkg, 'make install', Autobuild.tool(:make), 'install.all')
+        end
+    end
+     
+end
+
+cmake_package "drivers/freenect2" do |pkg|
+    pkg.depends_on "drivers/glew"
+    pkg.depends_on "drivers/libusb"
+    pkg.importdir = pkg.name
+    pkg.define "USE_DEPS_EXTERNAL", "ON"
+    pkg.srcdir = File.join(pkg.srcdir,"examples","protonect")
+end
+
+import_package 'drivers/libusb' do |pkg|
+#        pkg.using[:libtool] = false 
+#        pkg.using[:autoheader] = false 
+#        pkg.using[:autoconf] = true 
+#        pkg.using[:autogen] = false 
+    pkg.post_install do
+        pkg.in_dir(pkg.srcdir) do
+            Autobuild::Subprocess.run(pkg,"boostrap", "./bootstrap.sh")
+            Autobuild::Subprocess.run(pkg,"configure", "./configure", "--prefix=#{Autobuild.prefix}")
+            Autobuild::Subprocess.run(pkg,"make", Autobuild.tool(:make))
+            Autobuild::Subprocess.run(pkg,"make install", Autobuild.tool(:make), "install")
+        end
+    end
+end
+
+autotools_package 'drivers/aravis' do |pkg|
+    pkg.depends_on 'gobject-introspection'
+    pkg.depends_on 'gstreamer'
+    pkg.depends_on 'gtk+-2.0'
+    pkg.depends_on 'gtk-doc-tools'
+end
+
 #################################################################################"
 #################################################################################"
 ## 
