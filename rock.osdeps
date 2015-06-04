@@ -413,4 +413,6 @@ bzip2:
     debian,ubuntu: libbz2-dev
 
 libturbojpeg:
-    debian,ubuntu: libturbojpeg1-dev 
+    debian: libturbojpeg1-dev 
+    ubuntu:
+        '14.04': libturbojpeg
